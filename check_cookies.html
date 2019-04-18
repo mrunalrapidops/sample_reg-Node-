@@ -1,0 +1,25 @@
+<html>
+<meta charset="UTF-8" />
+    <body>
+            <div id ="msg">hello</div>
+            <script type="text/javascript">
+                function cookiesEnable(){
+                    var arecookiesEnable = (navigator.cookieEnabled) ? true :false;
+                    if(typeof navigator.cookieEnabled == "undefined" && !arecookiesEnable)
+                    {
+                        document.cookie = "first_cookie";
+                        arecookiesEnable = (document.cookie.indexOf("first_cookie")!=-1)?true:false;
+                    }
+                    return arecookiesEnable;
+                }
+                if(cookiesEnable())
+                {
+                    document.getElementById("msg").innerHTML ="cookies are enable";
+                }
+                else{
+                    document.getElementById("msg").innerHTML ="cookies are disable";
+                }
+            </script>
+    </body>
+    
+</html>

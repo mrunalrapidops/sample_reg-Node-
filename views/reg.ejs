@@ -1,0 +1,174 @@
+<html>
+    <head>
+         <link href="css/style.css" rel="stylesheet" type="text/css"> 
+       <!--  <link rel="stylesheet" type="text/css" href="/style.css"> -->
+    </head>
+        </head>
+    <body> 
+        <script>
+          function showFileName( event ) {
+          // the change event gives us the input it occurred in 
+          var input = event.srcElement;
+          // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+          //var fileName = input.files[0].name;
+          var fileName = input.files[0].name;
+          // use fileName however fits your app best, i.e. add it into a div
+          /* var infoArea = document.getElementById( 'file-upload-filename' );
+          infoArea.textContent = 'File name: ' + fileName; */
+          document.getElementById("pictext").value = fileName;
+          } 
+     </script>
+          <form method="post" action="/page2" enctype="multipart/form-data">
+            <div class="container">
+              <h1>Register</h1> 
+              
+              <hr>
+              <label for="Name"><b>Name</b></label>
+              <input type="text" placeholder="First" name="name" >
+              <input type="text" placeholder="Middle" name="middle" >
+              <input type="text" placeholder="Last" name="last">
+              
+              <br><br>
+              <label for="Bod"><b>Birthdate</b></label>
+                    <input type="date" name="bday">
+              <br> <br>
+    
+              <label for="Bod"><b>Address</b></label>
+              <input type="text" placeholder="Enter Street Address" name="Address1">
+              <input type="text" placeholder="ZipCode" name="ZipCode">
+              <select id="city" name="city">
+                <option value="AHM">AHM</option>
+                <option value="MUM">MUM</option>
+                <option value="Del">Del</option>
+              </select>
+              <select id="Country" name="Country">
+                <option value="IND">IND</option>
+              </select>
+              <br> <br>
+              <label for="Bod"><b>Mobile Number</b></label><br>
+              <select id="mn" name="code">
+                <option value="+91">+91</option>
+              </select>
+              <input type="text" placeholder="Mobile Number" name="Mobile_Number">
+               <br>
+              <label for="Gender"><b>Gender</b></label><br>
+              <input type="radio" name="gender" value="male"> Male
+              <input type="radio" name="gender" value="female"> Female
+              <input type="radio" name="gender" value="other"> Other
+              <br>               
+              <label for="Gender"><b>Hobby</b></label><br>
+              <input type="checkbox" name="Hobby"  value="Traveling" >Traveling
+              <input type="checkbox" name="Hobby"  value="Rading"  >Rading
+              <input type="checkbox" name="Hobby"  value="Gaming"  >Gaming 
+              <br>
+
+              <label for="email"><b>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+              <input type="text" placeholder="Enter Email" name="email" >
+              <br>
+              <label for="psw"><b>Password</b></label>
+              <input type="password" placeholder="Enter Password" name="psw">
+              
+              <label for="psw-repeat"><b>Repeat Password</b></label>
+              <input type="password" placeholder="Repeat Password" name="repeat">
+              <br>
+                <label for="files" class="btn">Select Profile image</label>
+                <!-- <input type="file" name="image" id="image" value="upload Profile pic" accept="image/*" ><br> 
+                <img id="blah" src="#" alt="your image Display hear" />-->
+                <input type="file" id="file-upload" name="picori" multiple required onchange="showFileName(event)"/>
+                <div id="file-upload-filename" name="picoth"></div>
+                <input type="text" id="pictext" name="pictext">
+                <br>
+                <label for="psw" name="Message"><b>Message</b></label>
+                <textarea rows="2" cols="50" name="message"></textarea> 
+              <br>
+              <label for="Bod"><b>Roal</b></label>
+              <select id="roal" name="roal">
+                <option value="Employee">Employees</option>
+              </select>
+              <br>
+              <label for="Bod"><b>Blood_Group</b></label>
+              <select id="roal" name="Blood_Group">
+                <option value="Employee">B+</option>
+              </select>
+              <br>
+              <label for="Bod"><b>Branch</b></label>
+              <select id="roal" name="Branch">
+                <option value="Sola">Sola - 380060,IND</option>
+                <option value="Charlotte NC">Charlotte NC - 28202, USA</option>
+              </select>
+              <br>
+              <label for="dOJ"><b>Date Of Join</b></label>
+              <input type="date" name="doj">
+              <br>
+            <label for="Multiple data"><b>List of Skills[can choose multiple => ctrl+click]</b></label><br>
+            <select data-placeholder="" multiple class="chosen-select" name="Interest" size="8">
+                <option>Web Design</option>
+                <option>Backend Development</option>
+                <option>Deployment</option>
+                <option>Sales</option>
+                <option>Blog Writer</option>
+                <option>SEO</option>
+                <option>Degital Marketing</option>
+                <option>Ai/Ml</option>
+              </select>
+            <br><br>
+              <button type="submit" class="registerbtn">Register</button>
+              <button type="reset" class="resetbtn">Reset</button>
+            </div>
+          
+            <div class="container signin">
+              <p>Already have an account? <a href="login.ejs">login</a>.</p>
+            </div>
+          </form>  
+
+<!-- <input id="fileupload" type="file" />
+<hr />
+<b>Live Preview</b>
+<br />
+<br />
+<div id="dvPreview">
+</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script language="javascript" type="text/javascript">
+  $(function () {
+      $("#fileupload").change(function () {
+          $("#dvPreview").html("");
+          var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+          if (regex.test($(this).val().toLowerCase())) {
+              if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
+                  $("#dvPreview").show();
+                  $("#dvPreview")[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
+              }
+              else {
+                  if (typeof (FileReader) != "undefined") {
+                      $("#dvPreview").show();
+                      $("#dvPreview").append("<img />");
+                      var reader = new FileReader();
+                      reader.onload = function (e) {
+                          $("#dvPreview img").attr("src", e.target.result);
+                      }
+                      reader.readAsDataURL($(this)[0].files[0]);
+                  } else {
+                      alert("This browser does not support FileReader.");
+                  }
+              }
+          } else {
+              alert("Please upload a valid image file.");
+          }
+      });
+  });
+  </script>-->
+         
+    <!-- <form ref='uploadForm' id='uploadForm' action='/addemp' method='post' encType="multipart/form-data"> -->
+        <!-- <input type="file" name="sampleFile" /> -->
+        <!-- <form ref='uploadForm' action='/addemp' method='post'>
+        <label for="Gender"><b>Hobby</b></label><br>
+              <input type="checkbox" name="Hobby"  value="Traveling" >Traveling<br>
+              <input type="checkbox" name="Hobby"  value="Rading"  >Rading<br>
+              <input type="checkbox" name="Hobby"  value="Gaming"  >Gaming<br> 
+              
+				<input type='submit' value='Upload!' /> -->
+		</form>		
+      </body>
+    </html>
+    <html>

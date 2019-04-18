@@ -1,0 +1,20 @@
+1) Pass data(textbox's values) to one page to other page from "ejs->server(Get||Post req)->ejs"
+Get 
+from=>reg.ejs
+<form action="/page2" method="GET">
+          <input type="text" name="fname">
+         <!--  <input type="file" name="pic"> -->
+          <input type = "submit">
+        </form>
+server.js=>
+app.get("/page2", (req, res) => {  
+  res.send({'Fname': req.query['fname'], 'pic': req.query['pic']});
+});
+form=>/page2
+nothing send data  not display in text box
+only post when file upload
+Post
+
+2) login,logout,session-cookies
+
+
