@@ -1,0 +1,49 @@
+REG.ejs starts
+<!-- <input id="fileupload" type="file" />
+<hr />
+<b>Live Preview</b>
+<br />
+<br />
+<div id="dvPreview">
+</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script language="javascript" type="text/javascript">
+  $(function () {
+      $("#fileupload").change(function () {
+          $("#dvPreview").html("");
+          var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+          if (regex.test($(this).val().toLowerCase())) {
+              if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
+                  $("#dvPreview").show();
+                  $("#dvPreview")[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
+              }
+              else {
+                  if (typeof (FileReader) != "undefined") {
+                      $("#dvPreview").show();
+                      $("#dvPreview").append("<img />");
+                      var reader = new FileReader();
+                      reader.onload = function (e) {
+                          $("#dvPreview img").attr("src", e.target.result);
+                      }
+                      reader.readAsDataURL($(this)[0].files[0]);
+                  } else {
+                      alert("This browser does not support FileReader.");
+                  }
+              }
+          } else {
+              alert("Please upload a valid image file.");
+          }
+      });
+  });
+  </script>-->
+         
+    <!-- <form ref='uploadForm' id='uploadForm' action='/addemp' method='post' encType="multipart/form-data"> -->
+        <!-- <input type="file" name="sampleFile" /> -->
+        <!-- <form ref='uploadForm' action='/addemp' method='post'>
+        <label for="Gender"><b>Hobby</b></label><br>
+              <input type="checkbox" name="Hobby"  value="Traveling" >Traveling<br>
+              <input type="checkbox" name="Hobby"  value="Rading"  >Rading<br>
+              <input type="checkbox" name="Hobby"  value="Gaming"  >Gaming<br> 
+              
+				<input type='submit' value='Upload!' /> -->
+REG.ejs ENDS

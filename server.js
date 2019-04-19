@@ -7,8 +7,6 @@ var bodyParser = require('body-parser');
 var DateOnly = require('mongoose-dateonly')(mongoose);
 //var formidable = require('formidable');
 const fileUpload = require('express-fileupload');
-
-
 mongoose.Promise = global.Promise;mongoose.connect("mongodb://localhost:27017/reg_new",{ useNewUrlParser: true });
 var Schema = new mongoose.Schema({
     Name: String,
@@ -16,22 +14,22 @@ var Schema = new mongoose.Schema({
     midelname: String,
     birthday: DateOnly,
     Address1: String,
-    Address2: String,
+    zipcode: String,
     city: String,
     Country :String,
+    code:Number,
     Mobile_Number :Number,
     Gender: String, 
-    /* Hobby: String, => not working besause of array is object  */
-    Hobby: Object,
+    Hobby: Object,//array
     Email:String,
     Password: String,
     image: String,
-    Interest:Object,   
-    Roal: String,
+    Interest:Object,//array   
+    roal: String,
     Blood_Group: String,
     Branch: String,
     message: String,
-    roal: String
+    dateofjoin:DateOnly
    });
 mongoose.set('useFindAndModify', false);
 var User = mongoose.model("User", Schema);
@@ -66,13 +64,25 @@ app.get("/page2", (req, res) => {
   //res.render('page2',{'Fname': req.query['fname'], 'pic': req.query['pic']});
   console.log("req.query:",req.query);//get req
 });
+
 app.get("/getdata", (req, res) => { 
-    User.find({}, function(err, data){
-    res.json(data);
+  //res.render('getdata');  
+  //var data;
+  User.find({}, function(err, data){
+    //res.json(data);
+    //data = data;
     console.log(">>>> " + data );
-    });
+    res.render('getdata',{"data" :data});
+    }); 
 });
 
+app.post("/getdatapost", (req, res) => { 
+  User.find({}, function(err, data){
+  res.json(data);
+  console.log(">>>> " + data );
+  });
+});
+ 
 /* app.post('/upload', function(req, res) {
  */  /* if (Object.keys(req.files).length == 0) {
     return res.status(400).send('No files were uploaded.');
@@ -89,6 +99,7 @@ app.get("/getdata", (req, res) => {
     res.send('File uploaded!');
   }); */
 // console.log(__dirname + '/image'); 
+
  app.post('/upload', function(req, res) {
   let sampleFile;
   let uploadPath;
@@ -110,32 +121,38 @@ app.get("/getdata", (req, res) => {
 /* }); */
 
 
-app.post("/addemp", (req, res) => {//can list of emp
- /*  console.log("req.body:",req.body);// post req 
-  console.log("typeof req.body:",typeof req.body);// post req type */
+app.post("/addemp", (req, res) => {
+ /*  res.render('page2',{ body: req.body}); */
       var myData = new User({
         Name: req.body.name,
         lastName: req.body.last,
         midelname: req.body.middle,
         birthday: req.body.bday,
         Address1: req.body.Address1,
-        Address2: req.body.ZipCode ,
+        zipcode: req.body.ZipCode ,
         city: req.body.city,
         Country :req.body.Country,
+        code: req.body.code,
         Mobile_Number :req.body.Mobile_Number,
         Gender: req.body.gender,
         Hobby: req.body.Hobby,
         Email:req.body.email,
         Password: req.body.psw,
-        image: req.body.image,
+        image: req.body.pictext,
+        message:req.body.message,
+        dateofjoin:req.body.doj,
         Interest:req.body.Interest,   
-        Roal: req.body.Roal,
-        Blood_Group: req.body.Blood_Group,
+        Roal: req.body.roal,
+        Blood_Group: req.body.bg,
         Branch: req.body.Branch
     });
     myData.save()
     .then(item => {
-    res.json({msg:"item saved to database"});  
+    //res.render('getdata');
+    res.redirect('getdata');
+    //res.render('getdata');
+    //res.render('page2',{ body: req.body});
+    //res.json({msg:"item saved to database"});  
     })
     .catch(err => {
     res.status(400).send("unable to save to database");
@@ -174,4 +191,4 @@ app.post("/addemp", (req, res) => {//can list of emp
 
 app.listen(port, () => {
  console.log("Server listening on port " + port);
-});                                                                                                          
+});

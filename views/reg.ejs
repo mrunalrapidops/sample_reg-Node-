@@ -7,18 +7,12 @@
     <body> 
         <script>
           function showFileName( event ) {
-          // the change event gives us the input it occurred in 
           var input = event.srcElement;
-          // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
-          //var fileName = input.files[0].name;
           var fileName = input.files[0].name;
-          // use fileName however fits your app best, i.e. add it into a div
-          /* var infoArea = document.getElementById( 'file-upload-filename' );
-          infoArea.textContent = 'File name: ' + fileName; */
           document.getElementById("pictext").value = fileName;
           } 
      </script>
-          <form method="post" action="/page2" enctype="multipart/form-data">
+          <form method="post" action="/addemp" enctype="multipart/form-data">
             <div class="container">
               <h1>Register</h1> 
               
@@ -79,16 +73,19 @@
                 <input type="text" id="pictext" name="pictext">
                 <br>
                 <label for="psw" name="Message"><b>Message</b></label>
-                <textarea rows="2" cols="50" name="message"></textarea> 
+                <textarea rows="2" cols="50" name="message">Hello</textarea> 
               <br>
               <label for="Bod"><b>Roal</b></label>
               <select id="roal" name="roal">
                 <option value="Employee">Employees</option>
               </select>
               <br>
-              <label for="Bod"><b>Blood_Group</b></label>
-              <select id="roal" name="Blood_Group">
-                <option value="Employee">B+</option>
+              <label for="Blood_Group"><b>Blood_Group</b></label>
+              <select id="roal" name="bg">
+                <option value="B+">B+</option>
+                <option value="A+">A+</option>
+                <option value="AB+">AB+</option>
+                <option value="O+">O+</option>
               </select>
               <br>
               <label for="Bod"><b>Branch</b></label>
@@ -120,54 +117,6 @@
               <p>Already have an account? <a href="login.ejs">login</a>.</p>
             </div>
           </form>  
-
-<!-- <input id="fileupload" type="file" />
-<hr />
-<b>Live Preview</b>
-<br />
-<br />
-<div id="dvPreview">
-</div>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script language="javascript" type="text/javascript">
-  $(function () {
-      $("#fileupload").change(function () {
-          $("#dvPreview").html("");
-          var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
-          if (regex.test($(this).val().toLowerCase())) {
-              if ($.browser.msie && parseFloat(jQuery.browser.version) <= 9.0) {
-                  $("#dvPreview").show();
-                  $("#dvPreview")[0].filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = $(this).val();
-              }
-              else {
-                  if (typeof (FileReader) != "undefined") {
-                      $("#dvPreview").show();
-                      $("#dvPreview").append("<img />");
-                      var reader = new FileReader();
-                      reader.onload = function (e) {
-                          $("#dvPreview img").attr("src", e.target.result);
-                      }
-                      reader.readAsDataURL($(this)[0].files[0]);
-                  } else {
-                      alert("This browser does not support FileReader.");
-                  }
-              }
-          } else {
-              alert("Please upload a valid image file.");
-          }
-      });
-  });
-  </script>-->
-         
-    <!-- <form ref='uploadForm' id='uploadForm' action='/addemp' method='post' encType="multipart/form-data"> -->
-        <!-- <input type="file" name="sampleFile" /> -->
-        <!-- <form ref='uploadForm' action='/addemp' method='post'>
-        <label for="Gender"><b>Hobby</b></label><br>
-              <input type="checkbox" name="Hobby"  value="Traveling" >Traveling<br>
-              <input type="checkbox" name="Hobby"  value="Rading"  >Rading<br>
-              <input type="checkbox" name="Hobby"  value="Gaming"  >Gaming<br> 
-              
-				<input type='submit' value='Upload!' /> -->
 		</form>		
       </body>
     </html>

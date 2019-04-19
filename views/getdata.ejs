@@ -1,0 +1,56 @@
+<html>
+    <body>
+        <h1>Get Data</h1>
+        <table border="1">
+            <tr>
+                <td>id</td>
+                <td>Name</td>
+                <td>lastName</td>
+                <td>midelname</td>
+                <td>birthday</td>
+                <td>Address1</td>
+                <td>zipcode</td>
+                <td>city</td>
+                <td>Country</td>
+                <td>code</td>
+                <td>Mobile_Number</td>
+                <td>Gender</td>
+                <td>Hobby</td>
+                <td>Email</td>
+                <td>Password</td>
+                <td>image</td>
+                <td>message</td>
+                <td>dateofjoin</td>
+                <td>Interest</td>
+                <td>Blood_Group</td>
+                <td>Branch</td>
+                <td>Roal</td>
+            </tr>
+            <% for(var i=0; i < data.length; i++) {%>
+                <tr>
+                    <td><%= data[i]._id %></td>
+                    <td><%= data[i].Name %></td>
+                    <td><%= data[i].lastName %></td>
+                    <td><%= data[i].midelname %></td>
+                    <td><%= data[i].birthday %></td>
+                    <td><%= data[i].Address1 %></td>
+                    <td><%= data[i].zipcode %></td>
+                    <td><%= data[i].city %></td>
+                    <td><%= data[i].Country %></td>
+                    <td><%= data[i].code %></td>
+                    <td><%= data[i].Mobile_Number %></td>
+                    <td><%= data[i].Gender %></td>
+                    <td><%= data[i].Hobby %></td>
+                    <td><%= data[i].Email %></td>
+                    <td><%= data[i].Password %></td>
+                    <td><%= data[i].image %></td>
+                    <td><%= data[i].message %></td>
+                    <td><%= data[i].dateofjoin %></td>
+                    <td><%= data[i].Interest %></td>
+                    <td><%= data[i].Blood_Group %></td>
+                    <td><%= data[i].Branch %></td>
+                </tr>
+             <% } %>
+        </table>
+    </body>
+</html>
