@@ -142,7 +142,7 @@ app.post("/addemp", (req, res) => {
         message:req.body.message,
         dateofjoin:req.body.doj,
         Interest:req.body.Interest,   
-        Roal: req.body.roal,
+        roal: req.body.roal,
         Blood_Group: req.body.bg,
         Branch: req.body.Branch
     });

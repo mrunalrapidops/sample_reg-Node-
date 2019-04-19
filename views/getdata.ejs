@@ -1,4 +1,7 @@
 <html>
+    <head>
+       
+    </head>
     <body>
         <h1>Get Data</h1>
         <table border="1">
@@ -49,8 +52,16 @@
                     <td><%= data[i].Interest %></td>
                     <td><%= data[i].Blood_Group %></td>
                     <td><%= data[i].Branch %></td>
+                    <td><%= data[i].roal %></td>
+                    <td><input type="button" value="Edit/Update" onclick="updatedata(data[i]._id)"></td>
+                    <td><input type="button" value="Delete"></td>
                 </tr>
              <% } %>
-        </table>
+            </table>
+            <script>
+                    function updatedata(data){
+                        console.log(data);
+                    }
+                </script>
     </body>
 </html>
