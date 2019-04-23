@@ -18,18 +18,18 @@
               
               <hr>
               <label for="Name"><b>Name</b></label>
-              <input type="text" placeholder="First" name="name" >
-              <input type="text" placeholder="Middle" name="middle" >
-              <input type="text" placeholder="Last" name="last">
+              <input type="text" placeholder="First" name="name" value="test-name">
+              <input type="text" placeholder="Middle" name="middle" value="test-middle">
+              <input type="text" placeholder="Last" name="last" value="test-last">
               
               <br><br>
               <label for="Bod"><b>Birthdate</b></label>
-                    <input type="date" name="bday">
+                    <input type="date" name="bday" value="2012-3-23">
               <br> <br>
     
               <label for="Bod"><b>Address</b></label>
-              <input type="text" placeholder="Enter Street Address" name="Address1">
-              <input type="text" placeholder="ZipCode" name="ZipCode">
+              <input type="text" placeholder="Enter Street Address" name="Address1" value="test-Address">
+              <input type="text" placeholder="ZipCode" name="ZipCode" value="123456">
               <select id="city" name="city">
                 <option value="AHM">AHM</option>
                 <option value="MUM">MUM</option>
@@ -43,27 +43,27 @@
               <select id="mn" name="code">
                 <option value="+91">+91</option>
               </select>
-              <input type="text" placeholder="Mobile Number" name="Mobile_Number">
+              <input type="text" placeholder="Mobile Number" name="Mobile_Number" value="1234567890">
                <br>
               <label for="Gender"><b>Gender</b></label><br>
-              <input type="radio" name="gender" value="male"> Male
+              <input type="radio" name="gender" value="male" checked> Male
               <input type="radio" name="gender" value="female"> Female
               <input type="radio" name="gender" value="other"> Other
               <br>               
               <label for="Gender"><b>Hobby</b></label><br>
-              <input type="checkbox" name="Hobby"  value="Traveling" >Traveling
+              <input type="checkbox" name="Hobby"  value="Traveling" checked>Traveling
               <input type="checkbox" name="Hobby"  value="Rading"  >Rading
               <input type="checkbox" name="Hobby"  value="Gaming"  >Gaming 
               <br>
 
               <label for="email"><b>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-              <input type="text" placeholder="Enter Email" name="email" >
+              <input type="text" placeholder="Enter Email" name="email" value="test-email">
               <br>
               <label for="psw"><b>Password</b></label>
-              <input type="password" placeholder="Enter Password" name="psw">
+              <input type="password" placeholder="Enter Password" name="psw" value="test-pass">
               
               <label for="psw-repeat"><b>Repeat Password</b></label>
-              <input type="password" placeholder="Repeat Password" name="repeat">
+              <input type="password" placeholder="Repeat Password" name="repeat" value="test-pass">
               <br>
                 <label for="files" class="btn">Select Profile image</label>
                 <!-- <input type="file" name="image" id="image" value="upload Profile pic" accept="image/*" ><br> 
@@ -99,7 +99,7 @@
               <br>
             <label for="Multiple data"><b>List of Skills[can choose multiple => ctrl+click]</b></label><br>
             <select data-placeholder="" multiple class="chosen-select" name="Interest" size="8">
-                <option>Web Design</option>
+                <option  selected>Web Design</option>
                 <option>Backend Development</option>
                 <option>Deployment</option>
                 <option>Sales</option>

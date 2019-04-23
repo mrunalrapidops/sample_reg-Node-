@@ -5,6 +5,9 @@ var express = require("express");
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser');
 var DateOnly = require('mongoose-dateonly')(mongoose);
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var morgan = require('morgan');
 //var formidable = require('formidable');
 const fileUpload = require('express-fileupload');
 mongoose.Promise = global.Promise;mongoose.connect("mongodb://localhost:27017/reg_new",{ useNewUrlParser: true });
@@ -33,29 +36,99 @@ var Schema = new mongoose.Schema({
    });
 mongoose.set('useFindAndModify', false);
 var User = mongoose.model("User", Schema);
-
+var port = 3000;
 var app = express();
 app.set('view engine','ejs');
 app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-var port = 3000;
+app.use(morgan('dev'));
+app.use(cookieParser());
 
- app.get("/", (req, res) => {
-    res.render('reg');
+app.use(session({
+  key: 'user_sid',
+  secret: 'somerandonstuffs',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      expires: 600000
+  }
+}));
+
+// This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
+// This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
+app.use((req, res, next) => {
+  if (req.cookies.user_sid && !req.session.user) {
+    console.log('user_sid'+" is clear")
+      res.clearCookie('user_sid');        
+  }
+  next();
 });
+// middleware function to check for logged-in users
+var sessionChecker = (req, res, next) => {
+  if (req.session.item && req.cookies.user_sid){
+    console.log("from sessionChecker yes");
+    next();
+  }
+  else {
+    console.log("from sessionChecker no");
+    next();
+}   
+};
+
+app.get("/", sessionChecker,(req, res) => {
+  res.render('welcome');
+});
+
+ app.get("/reg", sessionChecker,(req, res) => {
+  res.render('reg');
+}); 
+
+/* app.get("/login", sessionChecker,(req, res) => {
+  res.render('login');
+}); */
+
+// route for user Login
+app.route('/login')
+    .get(sessionChecker, (req, res) => {
+      //res.render('login');
+      res.render(__dirname + '/views/login.ejs');
+      //console.log(__dirname + '/views/login.ejs'); 
+    })
+    .post((req, res) => {
+        var email = req.body.email, password = req.body.psw;
+        console.log("email:- " + email);
+        console.log("pass:-" + password);
+        User.findOne({ "Email": email,"Password":password }).then(function(data){
+          console.log(data);
+          if (!data) {
+            res.redirect('/login');
+        } else{
+          res.redirect('/getdata');
+        }
+        })
+       /*  User.findOne({ where: { username: username } }).then(function (user) {*/
+            /* else if (!user.validPassword(password)) {
+                res.redirect('/login');
+            } else {
+                req.session.user = user.dataValues;
+                res.redirect('/dashboard');
+            } */
+        }); 
+
+
 app.use(bodyParser.json())
 
 //app.post("/onlydatadisplay", (req, res) => {
 app.post("/page2", (req, res) => {  
   res.render('page2',{ body: req.body});
   /*res.send('name: ' + req.query['name']); */
-  console.log("req.body.pic:",req.body.pic);//get req
+  /* console.log("req.body.pic:",req.body.pic);//get req
   console.log("req.query:",req.query);//get req
   console.log("req.body:",req.body);// post req
   console.log("typeof req.body:",typeof req.body);// post req type
   console.log("req.params:",req.params);
-
+ */
 });
 app.get("/page2", (req, res) => {  
   /* res.render('page2',{ body: req.body}); */
@@ -65,13 +138,13 @@ app.get("/page2", (req, res) => {
   console.log("req.query:",req.query);//get req
 });
 
-app.get("/getdata", (req, res) => { 
+app.get("/getdata",sessionChecker, (req, res) => { 
   //res.render('getdata');  
   //var data;
   User.find({}, function(err, data){
     //res.json(data);
     //data = data;
-    console.log(">>>> " + data );
+   // console.log(">>>> " + data );
     res.render('getdata',{"data" :data});
     }); 
 });
@@ -82,23 +155,6 @@ app.post("/getdatapost", (req, res) => {
   console.log(">>>> " + data );
   });
 });
- 
-/* app.post('/upload', function(req, res) {
- */  /* if (Object.keys(req.files).length == 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
-
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.sampleFile;
-
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('', function(err) {
-    if (err)
-      return res.status(500).send(err);
-
-    res.send('File uploaded!');
-  }); */
-// console.log(__dirname + '/image'); 
 
  app.post('/upload', function(req, res) {
   let sampleFile;
@@ -119,7 +175,6 @@ app.post("/getdatapost", (req, res) => {
 });
 
 /* }); */
-
 
 app.post("/addemp", (req, res) => {
  /*  res.render('page2',{ body: req.body}); */
@@ -149,6 +204,10 @@ app.post("/addemp", (req, res) => {
     myData.save()
     .then(item => {
     //res.render('getdata');
+    req.session.item = myData;
+    console.log("myData Values" + myData);
+    if(typeof req.session.item !== "undefined" || req.session.item === true){console.log("session set successfully");}
+    else{console.log("session not set");}
     res.redirect('getdata');
     //res.render('getdata');
     //res.render('page2',{ body: req.body});
@@ -192,3 +251,21 @@ app.post("/addemp", (req, res) => {
 app.listen(port, () => {
  console.log("Server listening on port " + port);
 });
+
+//upload file code comment
+/* app.post('/upload', function(req, res) {
+ */  /* if (Object.keys(req.files).length == 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let sampleFile = req.files.sampleFile;
+
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv('', function(err) {
+    if (err)
+      return res.status(500).send(err);
+
+    res.send('File uploaded!');
+  }); */
+// console.log(__dirname + '/image'); 

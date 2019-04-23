@@ -10,13 +10,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-fileupload": "^1.1.4",
+    "express-session": "^1.16.1",
     "formidable": "^1.2.1",
     "mongoose": "^5.5.0",
     "mongoose-dateonly": "^1.0.6",
-    "multer": "^1.4.1"
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "pg": "^7.10.0",
+    "sequelize": "^5.7.4"
   }
 }
