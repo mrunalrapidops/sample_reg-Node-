@@ -58,7 +58,7 @@ app.use(session({
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
 // This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
 app.use((req, res, next) => {
-  if (req.cookies.user_sid && !req.session.user) {
+  if (req.cookies.user_sid && !req.session.item) {
     console.log('user_sid'+" is clear")
       res.clearCookie('user_sid');        
   }
@@ -104,18 +104,23 @@ app.route('/login')
           if (!data) {
             res.redirect('/login');
         } else{
+          req.session.item = data;
+          if(typeof req.session.item !== "undefined" || req.session.item === true){console.log("session set successfully after login");}
+          else{console.log("session not set after login");}
           res.redirect('/getdata');
         }
         })
-       /*  User.findOne({ where: { username: username } }).then(function (user) {*/
-            /* else if (!user.validPassword(password)) {
-                res.redirect('/login');
-            } else {
-                req.session.user = user.dataValues;
-                res.redirect('/dashboard');
-            } */
-        }); 
+       }); 
 
+        app.get('/logout', (req, res) => {
+          if (req.session.user && req.cookies.user_sid) {
+              res.clearCookie('user_sid');
+              res.redirect('/');
+          } else {
+              res.redirect('/login');
+          }
+      });
+      
 
 app.use(bodyParser.json())
 
@@ -205,7 +210,7 @@ app.post("/addemp", (req, res) => {
     .then(item => {
     //res.render('getdata');
     req.session.item = myData;
-    console.log("myData Values" + myData);
+    //console.log("myData Values" + myData);
     if(typeof req.session.item !== "undefined" || req.session.item === true){console.log("session set successfully");}
     else{console.log("session not set");}
     res.redirect('getdata');
@@ -269,3 +274,13 @@ app.listen(port, () => {
     res.send('File uploaded!');
   }); */
 // console.log(__dirname + '/image'); 
+
+//login
+/*  User.findOne({ where: { username: username } }).then(function (user) {*/
+            /* else if (!user.validPassword(password)) {
+                res.redirect('/login');
+            } else {
+                req.session.user = user.dataValues;
+                res.redirect('/dashboard');
+            } */
+        
