@@ -8,6 +8,7 @@ var DateOnly = require('mongoose-dateonly')(mongoose);
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var morgan = require('morgan');
+var cookies = require('browser-cookies');
 //var formidable = require('formidable');
 const fileUpload = require('express-fileupload');
 mongoose.Promise = global.Promise;mongoose.connect("mongodb://localhost:27017/reg_new",{ useNewUrlParser: true });
@@ -43,7 +44,10 @@ app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
 app.use(cookieParser());
+//check cookies enable or not
+//app.use(cookies.set('firstName', 'Lisa', {expires: 365},{secure: true, domain: 'www.example.org'}),(cookies.get('firstName')))
 
 app.use(session({
   key: 'user_sid',
@@ -57,30 +61,35 @@ app.use(session({
 
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
 // This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
-app.use((req, res, next) => {
-  if (req.cookies.user_sid && !req.session.item) {
+ app.use((req, res, next) => {
+  if (!req.cookies.user_sid && req.session.item) {
     console.log('user_sid'+" is clear")
       res.clearCookie('user_sid');        
   }
   next();
-});
+}); 
+
+
 // middleware function to check for logged-in users
 var sessionChecker = (req, res, next) => {
   if (req.session.item && req.cookies.user_sid){
-    console.log("from sessionChecker yes");
+    console.log("1");
+    //res.redirect('/getdata');
     next();
   }
   else {
     console.log("from sessionChecker no");
-    next();
+    console.log("2");
+    res.redirect('/login');
+    //next();
 }   
 };
 
-app.get("/", sessionChecker,(req, res) => {
+app.get("/",(req, res) => {
   res.render('welcome');
 });
 
- app.get("/reg", sessionChecker,(req, res) => {
+ app.get("/reg",(req, res) => {
   res.render('reg');
 }); 
 
@@ -90,21 +99,24 @@ app.get("/", sessionChecker,(req, res) => {
 
 // route for user Login
 app.route('/login')
-    .get(sessionChecker, (req, res) => {
+    .get((req, res) => {
       //res.render('login');
       res.render(__dirname + '/views/login.ejs');
       //console.log(__dirname + '/views/login.ejs'); 
     })
     .post((req, res) => {
         var email = req.body.email, password = req.body.psw;
-        console.log("email:- " + email);
-        console.log("pass:-" + password);
+        /* console.log("email:- " + email);
+        console.log("pass:-" + password); */
         User.findOne({ "Email": email,"Password":password }).then(function(data){
-          console.log(data);
+         /*  console.log(data); */
           if (!data) {
             res.redirect('/login');
         } else{
+          //req.session.item = data.id;
           req.session.item = data;
+          console.log("::req.session.item::"+typeof(req.session.item));
+          console.log("req.session.item"+req.session.item);
           if(typeof req.session.item !== "undefined" || req.session.item === true){console.log("session set successfully after login");}
           else{console.log("session not set after login");}
           res.redirect('/getdata');
@@ -113,7 +125,7 @@ app.route('/login')
        }); 
 
         app.get('/logout', (req, res) => {
-          if (req.session.user && req.cookies.user_sid) {
+          if (req.session.item && req.cookies.user_sid) {
               res.clearCookie('user_sid');
               res.redirect('/');
           } else {
@@ -240,9 +252,6 @@ app.post("/addemp", (req, res) => {
   });
 
   app.put("/update/:id", (req, res) => {
-  //var myData = new User(req.body);
-/*   console.log("update req.body.id",req.body.id);
-  console.log("update req.params.id",req.params.id); */
     User.findOneAndUpdate({ _id: req.params.id},{$set: { Name: req.body.Name,lastName: req.body.lastName,midelname: req.body.midelname,birthday: req.body.birthday,Address1: req.body.Address1,Address2: req.body.Address2,city: req.body.city,Country :req.body.Country,Mobile_Number :req.body.Mobile_Number,Gender: req.body.Gender,Hobby: req.body.Hobby,Email:req.body.Email,Password: req.body.Password,image: req.body.image, Roal: req.body.Roal}}, function(err) {
     if (!err) {
         res.send("item update in database");
@@ -283,4 +292,7 @@ app.listen(port, () => {
                 req.session.user = user.dataValues;
                 res.redirect('/dashboard');
             } */
-        
+//update
+  //var myData = new User(req.body);
+/*   console.log("update req.body.id",req.body.id);
+  console.log("update req.params.id",req.params.id); */
