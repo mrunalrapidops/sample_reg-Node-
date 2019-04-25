@@ -47,7 +47,6 @@ app.use(morgan('dev'));
 
 app.use(cookieParser());
 //check cookies enable or not
-//app.use(cookies.set('firstName', 'Lisa', {expires: 365},{secure: true, domain: 'www.example.org'}),(cookies.get('firstName')))
 
 app.use(session({
   key: 'user_sid',
@@ -73,7 +72,7 @@ app.use(session({
 // middleware function to check for logged-in users
 var sessionChecker = (req, res, next) => {
   if (req.session.item && req.cookies.user_sid){
-    console.log("1");
+    //console.log("1");
     //res.redirect('/getdata');
     next();
   }
@@ -149,28 +148,29 @@ app.post("/page2", (req, res) => {
 });
 app.get("/page2", (req, res) => {  
   /* res.render('page2',{ body: req.body}); */
-  //res.send('name: ' + req.query['fname']); 
-  res.send('page2',{'Fname': req.query['fname']});
+  res.send('name: ' + req.query['Name']); 
+  /* res.send('page2',{'Fname': req.query['Name']}) */;
   //res.render('page2',{'Fname': req.query['fname'], 'pic': req.query['pic']});
   console.log("req.query:",req.query);//get req
+
 });
 
 app.get("/getdata",sessionChecker, (req, res) => { 
-  //res.render('getdata');  
-  //var data;
   User.find({}, function(err, data){
-    //res.json(data);
-    //data = data;
-   // console.log(">>>> " + data );
     res.render('getdata',{"data" :data});
     }); 
 });
 
 app.post("/getdatapost", (req, res) => { 
-  User.find({}, function(err, data){
-  res.json(data);
-  console.log(">>>> " + data );
-  });
+  try {
+    User.find({}, function(err, data){
+      res.json(data);
+      console.log(">>>> " + data );
+      });
+  } catch (err) {
+    console.log(err);
+  }
+
 });
 
  app.post('/upload', function(req, res) {
@@ -220,23 +220,20 @@ app.post("/addemp", (req, res) => {
     });
     myData.save()
     .then(item => {
-    //res.render('getdata');
     req.session.item = myData;
-    //console.log("myData Values" + myData);
     if(typeof req.session.item !== "undefined" || req.session.item === true){console.log("session set successfully");}
     else{console.log("session not set");}
     res.redirect('getdata');
-    //res.render('getdata');
-    //res.render('page2',{ body: req.body});
-    //res.json({msg:"item saved to database"});  
     })
     .catch(err => {
     res.status(400).send("unable to save to database");
     }); 
    });
   
-/*    app.use('/upload', router); */
-
+/* app.use('/upload', router);*/
+app.get("/uploads",(req, res) => { 
+    //console.log(id);
+});  
  
   app.delete("/delete/:id", (req, res) => {
    User.findOneAndDelete({ _id: req.params.id}, function(err) {

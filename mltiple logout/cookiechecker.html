@@ -1,0 +1,43 @@
+<html>
+    <head>
+            <meta charset="utf-8"/>
+            <script>
+                function setCookie(cookiename, cookievalue, expdays) {
+                    var d = new Date();
+                    d.setTime(d.getTime()+(expdays * 24 * 60 * 60 * 1000));
+                    var expires = "expires=" + d.toUTCString();
+                    document.cookie = cookiename + "=" + cookievalue + "; " + expires;
+                }
+                function getCookie(cookiename) {
+                    var name = cookiename + "=";
+                    var startPos = document.cookie.indexOf(name);
+                    if(startPos == -1) return null;
+                    startPos+=(name.length);
+                    if(document.cookie.indexOf(";",startPos) == -1){
+                        return document.cookie.substring(startPos,document.cookie.length);
+                    }
+                    else{
+                        return document.cookie.substring(startPos,document.cookie.indexOf(';',startPos));
+                    }
+                    return null;
+                }
+                function checkCookie() {
+                    var loggedin = getCookie("loggedin");
+                    if (loggedin && loggedin !=null) {
+                        window.location.href="login.html";  
+                        // Logged in
+                        //do  nothing
+                    }
+                    else{
+                        window.location.href="hello.html";
+                    }
+                }
+            </script>
+    </head>
+    <!-- <body onload = "setTimeout(checkCookie,1000);"> -->
+    <body>
+            <h1>checkCookie</h1>  
+            <input type="button" value="setCookie" onclick="setCookie('Name','val')">  
+            <input type="button" value="checkCookie" onclick="checkCookie()">      
+    </body>
+</html>

@@ -26,7 +26,13 @@
                     }
                     </style>
     </head>
-    <body>
+    <body onchange="myFunction()">
+      <script>
+          function myFunction() {
+            location.reload();
+            //window.onfocus = function() { blurred && (location.reload()); };
+          }
+      </script>
             <ul>
                     <li><a class="active" href="#home">Home</a></li>
                     <li><a href="#news">News</a></li>
@@ -37,6 +43,8 @@
         <h1>Get Data</h1>
         <table border="1">
             <tr>
+                <td>Delete</td>
+                <td>image</td>
                 <td>id</td>
                 <td>Name</td>
                 <td>lastName</td>
@@ -61,7 +69,11 @@
                 <td>Roal</td>
             </tr>
             <% for(var i=0; i < data.length; i++) {%>
+              <% var image = data[i].image %>
+
                 <tr>
+                    <td><input type="checkbox" value="<%= data[i]._id %>"></td>
+                    <td><img src="../uploads/<%=data[i].image%>" alt="image not found"></td>
                     <td><%= data[i]._id %></td>
                     <td><%= data[i].Name %></td>
                     <td><%= data[i].lastName %></td>
