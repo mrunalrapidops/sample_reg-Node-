@@ -13,7 +13,7 @@
                       float: left;
                     }
                     
-                    li a {
+                    li a{
                       display: block;
                       color: white;
                       text-align: center;
@@ -21,7 +21,7 @@
                       text-decoration: none;
                     }
                     
-                    li a:hover {
+                    li a p:hover {
                       background-color: #111;
                     }
                     </style>
@@ -35,15 +35,17 @@
       </script>
             <ul>
                     <li><a class="active" href="#home">Home</a></li>
-                    <li><a href="#news">News</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li> <p style="color: white; margin-right: 20px;">Filter</p></li>
+                    <li> <input type="text" placeholder="Search User.." style="margin-top: 14px;"></li>
                     <li><a href="/logout">logout</a></li>
                   </ul>                  
         <h1>Get Data</h1>
         <table border="1">
             <tr>
+                <!-- <td> <input type="button" value="Delete ALL" onclick="msg()"></td> -->
                 <td>Delete</td>
+                <td>View/update</td>
+                <td>MD</td>
                 <td>image</td>
                 <td>id</td>
                 <td>Name</td>
@@ -68,12 +70,19 @@
                 <td>Branch</td>
                 <td>Roal</td>
             </tr>
+            <!-- <img src="http://localhost:3000/public/upimage/Screenshot from 2019-01-09 15-02-55.png>" -->
+            <!-- <img src="upimage/1.png" alt="nf"> --> <!-- working -->
             <% for(var i=0; i < data.length; i++) {%>
               <% var image = data[i].image %>
-
                 <tr>
-                    <td><input type="checkbox" value="<%= data[i]._id %>"></td>
-                    <td><img src="../uploads/<%=data[i].image%>" alt="image not found"></td>
+                   <!--  <td><input type="checkbox" value="<%= data[i]._id %>"></td> -->
+                    <td> <a href="/delete/<%= data[i]._id %>"> delete</a></td>
+                    <td> <a href="/view/<%= data[i]._id %>"> view/update</a></td> 
+                    <td> <input type="checkbox" name="check[]" value="data[i]._id"></td>
+                    <td><img src="/upimage/<%=image%>"  alt="inotf" width="auto" height="30"></td>
+                    <!-- <% var carName = "1.png"; %>
+                    <% console.log(carName); %>
+                    <img src="/upimage/<%=carName%>" alt="not image" width="auto" height="40"> -->
                     <td><%= data[i]._id %></td>
                     <td><%= data[i].Name %></td>
                     <td><%= data[i].lastName %></td>
@@ -96,8 +105,8 @@
                     <td><%= data[i].Blood_Group %></td>
                     <td><%= data[i].Branch %></td>
                     <td><%= data[i].roal %></td>
-                    <td><input type="button" value="Edit/Update" onclick="updatedata(data[i]._id)"></td>
-                    <td><input type="button" value="Delete"></td>
+                    <!-- <td><input type="button" value="Edit/Update" onclick="updatedata(data[i]._id)"></td>
+                    <td><input type="button" value="Delete"></td> -->
                 </tr>
              <% } %>
             </table>

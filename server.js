@@ -9,6 +9,10 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var morgan = require('morgan');
 var cookies = require('browser-cookies');
+var path = require('path');
+var fs = require("fs");
+var readimage = require("readimage"); 
+
 //var formidable = require('formidable');
 const fileUpload = require('express-fileupload');
 mongoose.Promise = global.Promise;mongoose.connect("mongodb://localhost:27017/reg_new",{ useNewUrlParser: true });
@@ -44,7 +48,8 @@ app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
-
+app.use(express.static(path.join(__dirname, 'public')));// install path
+//app.use(express.static(public));
 app.use(cookieParser());
 //check cookies enable or not
 
@@ -138,6 +143,7 @@ app.use(bodyParser.json())
 //app.post("/onlydatadisplay", (req, res) => {
 app.post("/page2", (req, res) => {  
   res.render('page2',{ body: req.body});
+
   /*res.send('name: ' + req.query['name']); */
   /* console.log("req.body.pic:",req.body.pic);//get req
   console.log("req.query:",req.query);//get req
@@ -146,14 +152,35 @@ app.post("/page2", (req, res) => {
   console.log("req.params:",req.params);
  */
 });
-app.get("/page2", (req, res) => {  
-  /* res.render('page2',{ body: req.body}); */
-  res.send('name: ' + req.query['Name']); 
-  /* res.send('page2',{'Fname': req.query['Name']}) */;
-  //res.render('page2',{'Fname': req.query['fname'], 'pic': req.query['pic']});
-  console.log("req.query:",req.query);//get req
+app.get("/view/:id", (req, res) => {  
+  console.log("Hello");
+  // res.send("Hello");
+  User.findOne({"_id": req.params.id })
+    .then(function(data){
+       if (!data) 
+        res.send("No Data recive");
+    else
+        //res.send(data)
+        console.log("req.query:",req.query);
+        console.log("req.body:",req.body);
+        console.log("req.params:",req.params);
+        console.log("data",data);
+        res.render('page2',{"data": data});
+    })
+})
 
+app.put("/update", (req, res) => {
+ /*  User.findOneAndUpdate({ _id: req.params.id},{$set: { Name: req.body.Name,lastName: req.body.lastName,midelname: req.body.midelname,birthday: req.body.birthday,Address1: req.body.Address1,Address2: req.body.Address2,city: req.body.city,Country :req.body.Country,Mobile_Number :req.body.Mobile_Number,Gender: req.body.Gender,Hobby: req.body.Hobby,Email:req.body.Email,Password: req.body.Password,image: req.body.image, Roal: req.body.Roal}}, function(err) {
+  if (!err) {
+      res.send("item update in database");
+    }
+    else {
+        res.send("item not update in database");
+    }
+  }); */
+  console.log("in update");
 });
+
 
 app.get("/getdata",sessionChecker, (req, res) => { 
   User.find({}, function(err, data){
@@ -231,11 +258,11 @@ app.post("/addemp", (req, res) => {
    });
   
 /* app.use('/upload', router);*/
-app.get("/uploads",(req, res) => { 
+/* app.get("/uploads",(req, res) => { 
     //console.log(id);
 });  
- 
-  app.delete("/delete/:id", (req, res) => {
+  */
+  /* app.delete("/delete/:id", (req, res) => {
    User.findOneAndDelete({ _id: req.params.id}, function(err) {
       if (!err) {
          // res.send("item delete from database");
@@ -246,7 +273,21 @@ app.get("/uploads",(req, res) => {
           res.json({msg:"item not saved to database"});
       }
     });
-  });
+  }); */ //in angular
+  app.get("/delete/:id", (req, res) => {
+    User.findOneAndDelete({ _id: req.params.id}, function(err) {
+       if (!err) {
+          // res.send("item delete from database");
+           //res.json({msg:"item saved to database"});
+           res.redirect("/getdata"); 
+       }
+       else {
+           //res.send("item not delete from database");
+           res.json({msg:"item not saved to database"});
+           //res.redirect("/getdata")
+       }
+     });
+   });
 
   app.put("/update/:id", (req, res) => {
     User.findOneAndUpdate({ _id: req.params.id},{$set: { Name: req.body.Name,lastName: req.body.lastName,midelname: req.body.midelname,birthday: req.body.birthday,Address1: req.body.Address1,Address2: req.body.Address2,city: req.body.city,Country :req.body.Country,Mobile_Number :req.body.Mobile_Number,Gender: req.body.Gender,Hobby: req.body.Hobby,Email:req.body.Email,Password: req.body.Password,image: req.body.image, Roal: req.body.Roal}}, function(err) {

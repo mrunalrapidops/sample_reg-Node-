@@ -19,11 +19,15 @@
     "express-fileupload": "^1.1.4",
     "express-session": "^1.16.1",
     "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
     "mongoose": "^5.5.0",
     "mongoose-dateonly": "^1.0.6",
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
+    "path": "^0.12.7",
     "pg": "^7.10.0",
+    "readimage": "^1.1.1",
     "sequelize": "^5.7.4"
   }
 }
