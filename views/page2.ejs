@@ -6,50 +6,51 @@
                       <th>Name</th>
                     </tr>
                     <tr>
-                        <td>Name<input type=text value="<%= data.Name %>"></td>
-                        <td>Middle<input type=text value="<%= data.midelname %>"></td>
-                        <td> Last<input type=text value="<%= data.lastName %>"></td>
+                       <input type=text  name="id" value="<%= data._id %>">
+                        <td>Name<input type=text  name="Name" value="<%= data.Name %>"></td>
+                        <td>Middle<input type=text name="midelname" value="<%= data.midelname %>"></td>
+                        <td>Last<input type=text name="lastName" value="<%= data.lastName %>"></td>
                     </tr>
                     <tr>
                             <th>Date</th>
                     </tr>
                     <tr>
-                      <td>Birth Date<input type=text value="<%= data.birthday %>"></td>
-                      <td>Date of joining<input type=text value="<%= data.dateofjoin %>"></td>
+                      <td>Birth Date<input type=text name="birthday" value="<%= data.birthday %>"></td>
+                      <td>Date of joining<input type=text name="dateofjoin" value="<%= data.dateofjoin %>"></td>
                     </tr>
                     <tr>
                             <th>Address</th>
                     </tr>
                     <tr>
-                    <td>Address<input type=text value="<%= data.Address1 %>"></td>
-                    <td>ZipCode<input type=text value="<%= data.zipcode %>"></td></tr>
-                    <tr><td>city<input type=text value="<%= data.city %>"></td>
-                    <td>Country<input type=text value="<%= data.Country %>"></td>                       
+                    <td>Address<input type=text name="Address1" value="<%= data.Address1 %>"></td>
+                    <td>ZipCode<input type=text name="zipcode" value="<%= data.zipcode %>"></td></tr>
+                    <tr><td>city<input type=text  name="city" value="<%= data.city %>"></td>
+                    <td>Country<input type=text name="Country" value="<%= data.Country %>"></td>                       
                     </tr>
                     <tr>
                             <th>Contect</th>
                     </tr>
                     <tr>
-                    <td>code<input type=text value="<%= data.code %>"></td>
-                    <td>Mobile_Number<input type=text value="<%= data.Mobile_Number %>"></td>
-                    <tr><td>Email<input type=text value="<%= data.Email %>"><br></td></tr>
+                    <td>code<input type=text name="code" value="<%= data.code %>"></td>
+                    <td>Mobile_Number<input type=text name="Mobile_Number" value="<%= data.Mobile_Number %>"></td>
+                    <tr><td>Email<input type=text name="Email" value="<%= data.Email %>"><br></td></tr>
                     </tr>
                     <tr>
                             <th>Personal</th>
                     </tr>
                     <tr>
-                    <td>Gender<input type=text value="<%= data.Gender %>"></td>
-                    <td>Hobby<input type=text value="<%= data.Hobby %>"></td>
-                    <td>Picture<input type=text value="<%= data.image %>"></td>
+                    <td>Gender<input type=text name="Gender" value="<%= data.Gender %>"></td>
+                    <td>Hobby<input type=text name="Hobby" value="<%= data.Hobby %>"></td>
+                    <td>Picture<input type=text name="image" value="<%= data.image %>"></td>
                     <% var carName = data.image; %>
                     <% console.log(carName); %>
                     <td><img src="/upimage/<%=carName%>" alt="not image" height="100" width="100"></td>
                     <tr>
-                    <td>Message<input type=text value="<%= data.message %>"><br>
-                    <td>Role<input type=text value="<%= data.roal %>"><br>
+                    <td>Message<input type=text name="message" value="<%= data.message %>"><br>
+                    <td>Role<input type=text name="roal" value="<%= data.roal %>"><br>
                     <td>Blood_Group<input type=text value="<%= data.Blood_Group %>"><br></tr>
-                    <td>Branch<input type=text value="<%= data.Branch %>"><br>
-                    <td>List of Skills<input type=text value="<%= data.Interest %>">
+                    <td>Branch<input type=text name="Blood_Group" value="<%= data.Branch %>"><br>
+                    <td>List of Skills<input name="Interest" type=text value="<%= data.Interest %>">
                     </tr>
                   </table>
                   <input type="submit" value="Update">

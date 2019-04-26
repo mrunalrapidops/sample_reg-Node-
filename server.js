@@ -168,17 +168,45 @@ app.get("/view/:id", (req, res) => {
         res.render('page2',{"data": data});
     })
 })
+app.post("/update", (req, res) => {
+  User.findOneAndUpdate({ _id: req.body.id},{$set: {Name: req.body.Name,
+                                                    lastName: req.body.lastName,
+                                                    midelname: req.body.midelname,
+                                                    birthday: req.body.birthday,
+                                                    dateofjoin:req.body.dateofjoin,
+                                                    Address1: req.body.Address1,
+                                                    zipcode: req.body.zipcode,
+                                                    city: req.body.city,
+                                                    Country :req.body.Country,
+                                                    code:req.body.code,
+                                                    Mobile_Number :req.body.Mobile_Number,
+                                                    Gender: req.body.Gender,
+                                                    Hobby: req.body.Hobby,
+                                                    Email:req.body.Email,
+                                                    Password: req.body.Password,
+                                                    image: req.body.image,
+                                                    Blood_Group:req.body.Blood_Group,
+                                                    Roal: req.body.Roal,
+                                                    Interest:req.body.Interest
+                                                  }}, function(err) {
+  if (!err) {
+      res.send("item update in database");
+    }
+    else {
+      res.redirect('getdata');
+    }
+  });
+});
 
-app.put("/update", (req, res) => {
- /*  User.findOneAndUpdate({ _id: req.params.id},{$set: { Name: req.body.Name,lastName: req.body.lastName,midelname: req.body.midelname,birthday: req.body.birthday,Address1: req.body.Address1,Address2: req.body.Address2,city: req.body.city,Country :req.body.Country,Mobile_Number :req.body.Mobile_Number,Gender: req.body.Gender,Hobby: req.body.Hobby,Email:req.body.Email,Password: req.body.Password,image: req.body.image, Roal: req.body.Roal}}, function(err) {
+app.put("/update/:id", (req, res) => {
+  User.findOneAndUpdate({ _id: req.params.id},{$set: { Name: req.body.Name,lastName: req.body.lastName,midelname: req.body.midelname,birthday: req.body.birthday,Address1: req.body.Address1,Address2: req.body.Address2,city: req.body.city,Country :req.body.Country,Mobile_Number :req.body.Mobile_Number,Gender: req.body.Gender,Hobby: req.body.Hobby,Email:req.body.Email,Password: req.body.Password,image: req.body.image, Roal: req.body.Roal}}, function(err) {
   if (!err) {
       res.send("item update in database");
     }
     else {
         res.send("item not update in database");
     }
-  }); */
-  console.log("in update");
+  });
 });
 
 
