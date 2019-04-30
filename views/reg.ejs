@@ -1,9 +1,20 @@
 <html>
     <head>
-         <!-- <link href="css/style.css" rel="stylesheet" type="text/css">  -->
-       <!--  <link rel="stylesheet" type="text/css" href="/style.css"> -->
+      <!-- <link href="css/style.css" rel="stylesheet" type="text/css">  -->
+      <!--  <link rel="stylesheet" type="text/css" href="/style.css"> -->
+      <script src="Scripts/jquery-3.1.1.min.js"></script>
+      <script src="Scripts/jquery.form.min.js"></script>
+    <script>
+        $(document).ready(function() {
+                    var options = {
+                            beforeSubmit: showRequest, 
+                            success: showResponse  }; 
+        $('#frmUploader').submit(function () { $(this).ajaxSubmit(options); 
+            return false; }); });
+             function showRequest(formData, jqForm, options) { alert('Uploading is starting.'); return true; } 
+             function showResponse(responseText, statusText, xhr, $form) { alert('status: ' + statusText + '\n\nresponseText: \n' + responseText ); }
+    </script>
     </head>
-        </head>
     <body> 
         <script>
           function showFileName( event ) {
@@ -13,10 +24,9 @@
           } 
      </script>
       
-          <form method="post" action="/addemp" enctype="multipart/form-data">
+          <form id="frmUploader" method="post" action="/addemp" enctype="multipart/form-data">
             <div class="container">
               <h1>Register</h1> 
-              
               <hr>
               <label for="Name"><b>Name</b></label>
               <input type="text" placeholder="First" name="name" value="test-name">
@@ -53,8 +63,8 @@
               <br>               
               <label for="Gender"><b>Hobby</b></label><br>
               <input type="checkbox" name="Hobby"  value="Traveling" checked>Traveling
-              <input type="checkbox" name="Hobby"  value="Rading"  >Rading
-              <input type="checkbox" name="Hobby"  value="Gaming"  >Gaming 
+              <input type="checkbox" name="Hobby"  value="Rading">Rading
+              <input type="checkbox" name="Hobby"  value="Gaming">Gaming 
               <br>
 
               <label for="email"><b>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
@@ -67,11 +77,9 @@
               <input type="password" placeholder="Repeat Password" name="repeat" value="test-pass">
               <br>
                 <label for="files" class="btn">Select Profile image</label>
-                <!-- <input type="file" name="image" id="image" value="upload Profile pic" accept="image/*" ><br> 
-                <img id="blah" src="#" alt="your image Display hear" />-->
                 <input type="file" id="file-upload" name="picori" multiple required onchange="showFileName(event)"/>
                 <div id="file-upload-filename" name="picoth"></div>
-                <input type="text" id="pictext" name="pictext">
+                <input type="text" id="pictext" name="pictext"> 
                 <br>
                 <label for="psw" name="Message"><b>Message</b></label>
                 <textarea rows="2" cols="50" name="message">Hello</textarea> 
@@ -110,7 +118,8 @@
                 <option>Ai/Ml</option>
               </select>
             <br><br>
-              <button type="submit" class="registerbtn">Register</button>
+              <!-- <button type="submit" class="registerbtn">Register</button> -->
+              <input type="submit" name="submit" id="btnSubmit" value="Register" /> </form>
               <button type="reset" class="resetbtn">Reset</button>
             </div>
           
@@ -118,7 +127,7 @@
               <p>Already have an account? <a href="login.ejs">login</a>.</p>
             </div>
           </form>  
-		</form>		
+    </form>		
+   
       </body>
     </html>
-    <html>

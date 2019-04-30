@@ -1,4 +1,5 @@
 <html>
+
     <body>
         <form method="POST" action="/update">
             <table>
@@ -6,7 +7,7 @@
                       <th>Name</th>
                     </tr>
                     <tr>
-                       <input type=text  name="id" value="<%= data._id %>">
+                       <input type="hidden" name="id" value="<%= data._id %>" >
                         <td>Name<input type=text  name="Name" value="<%= data.Name %>"></td>
                         <td>Middle<input type=text name="midelname" value="<%= data.midelname %>"></td>
                         <td>Last<input type=text name="lastName" value="<%= data.lastName %>"></td>
@@ -33,7 +34,8 @@
                     <tr>
                     <td>code<input type=text name="code" value="<%= data.code %>"></td>
                     <td>Mobile_Number<input type=text name="Mobile_Number" value="<%= data.Mobile_Number %>"></td>
-                    <tr><td>Email<input type=text name="Email" value="<%= data.Email %>"><br></td></tr>
+                    <tr><td>Email<input type=text name="Email" value="<%= data.Email %>"><br></td>
+                        <td>password<input type=text name="Password" value="<%= data.Password %>"><br></td></tr>
                     </tr>
                     <tr>
                             <th>Personal</th>
@@ -50,8 +52,13 @@
                     <td>Role<input type=text name="roal" value="<%= data.roal %>"><br>
                     <td>Blood_Group<input type=text value="<%= data.Blood_Group %>"><br></tr>
                     <td>Branch<input type=text name="Blood_Group" value="<%= data.Branch %>"><br>
-                    <td>List of Skills<input name="Interest" type=text value="<%= data.Interest %>">
                     </tr>
+                    <tr>
+                        <td>
+                                        List of Skills<!-- <input name="Interest" type=text value="<%= data.Interest %>"> -->
+                                        <textarea rows="2" cols="20" name="Interest"><%= data.Interest %></textarea>
+                        </td>
+                    </tr>                                
                   </table>
                   <input type="submit" value="Update">
                   <input type="button" value="cancel">

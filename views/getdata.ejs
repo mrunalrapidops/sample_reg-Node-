@@ -26,7 +26,7 @@
                     }
                     </style>
     </head>
-    <body onchange="myFunction()">
+    <body onclick="myFunction()">
       <script>
           function myFunction() {
             location.reload();
@@ -34,9 +34,11 @@
           }
       </script>
             <ul>
-                    <li><a class="active" href="#home">Home</a></li>
-                    <li> <p style="color: white; margin-right: 20px;">Filter</p></li>
-                    <li> <input type="text" placeholder="Search User.." style="margin-top: 14px;"></li>
+                    <li><a class="active" href="#home">Personal</a></li>
+                    <!-- <li><p style="color: white; margin-right: 20px;">Filter/serach</p></li> -->
+                    <li><a class="active" href="#home">Filter/serach</a></li>
+                    <li><a class="active" href="#Salary">Salary</a></li>
+                    <li><a class="active" href="#Performance">Performance</a></li>
                     <li><a href="/logout">logout</a></li>
                   </ul>                  
         <h1>Get Data</h1>
@@ -45,9 +47,8 @@
                 <!-- <td> <input type="button" value="Delete ALL" onclick="msg()"></td> -->
                 <td>Delete</td>
                 <td>View/update</td>
-                <td>MD</td>
                 <td>image</td>
-                <td>id</td>
+                <!-- <td>id</td> -->
                 <td>Name</td>
                 <td>lastName</td>
                 <td>midelname</td>
@@ -62,7 +63,7 @@
                 <td>Hobby</td>
                 <td>Email</td>
                 <td>Password</td>
-                <td>image</td>
+               <!--  <td>image</td> -->
                 <td>message</td>
                 <td>dateofjoin</td>
                 <td>Interest</td>
@@ -78,12 +79,11 @@
                    <!--  <td><input type="checkbox" value="<%= data[i]._id %>"></td> -->
                     <td> <a href="/delete/<%= data[i]._id %>"> delete</a></td>
                     <td> <a href="/view/<%= data[i]._id %>"> view/update</a></td> 
-                    <td> <input type="checkbox" name="check[]" value="data[i]._id"></td>
                     <td><img src="/upimage/<%=image%>"  alt="inotf" width="auto" height="30"></td>
                     <!-- <% var carName = "1.png"; %>
                     <% console.log(carName); %>
                     <img src="/upimage/<%=carName%>" alt="not image" width="auto" height="40"> -->
-                    <td><%= data[i]._id %></td>
+                   <!--  <td><%= data[i]._id %></td> -->
                     <td><%= data[i].Name %></td>
                     <td><%= data[i].lastName %></td>
                     <td><%= data[i].midelname %></td>
@@ -98,7 +98,7 @@
                     <td><%= data[i].Hobby %></td>
                     <td><%= data[i].Email %></td>
                     <td><%= data[i].Password %></td>
-                    <td><%= data[i].image %></td>
+                   <!--  <td><%= data[i].image %></td> -->
                     <td><%= data[i].message %></td>
                     <td><%= data[i].dateofjoin %></td>
                     <td><%= data[i].Interest %></td>

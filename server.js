@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var DateOnly = require('mongoose-dateonly')(mongoose);
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var multer = require('multer');
 var morgan = require('morgan');
 var cookies = require('browser-cookies');
 var path = require('path');
@@ -121,6 +122,7 @@ app.route('/login')
           req.session.item = data;
           console.log("::req.session.item::"+typeof(req.session.item));
           console.log("req.session.item"+req.session.item);
+          console.log("__dirname::::::::::::::::::::::::::::::::::"+__dirname);
           if(typeof req.session.item !== "undefined" || req.session.item === true){console.log("session set successfully after login");}
           else{console.log("session not set after login");}
           res.redirect('/getdata');
@@ -169,6 +171,8 @@ app.get("/view/:id", (req, res) => {
     })
 })
 app.post("/update", (req, res) => {
+  /* document.write("Hello"); */
+  console.log(req.body.id);
   User.findOneAndUpdate({ _id: req.body.id},{$set: {Name: req.body.Name,
                                                     lastName: req.body.lastName,
                                                     midelname: req.body.midelname,
@@ -187,13 +191,14 @@ app.post("/update", (req, res) => {
                                                     image: req.body.image,
                                                     Blood_Group:req.body.Blood_Group,
                                                     Roal: req.body.Roal,
-                                                    Interest:req.body.Interest
+                                                    Interest:req.body.Interest,
+                                                    message:req.body.message
                                                   }}, function(err) {
   if (!err) {
-      res.send("item update in database");
+      res.redirect('getdata');
     }
     else {
-      res.redirect('getdata');
+      res.send('Data not update');
     }
   });
 });
